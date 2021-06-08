@@ -25,6 +25,14 @@ public class Player {
     this.money = money;
   }
 
+  /**
+   * No Arg-Constructor
+   */
+  public Player () {
+
+  }
+
+
   //Getters and Setters
 
   /**
