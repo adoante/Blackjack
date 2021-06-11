@@ -1,3 +1,8 @@
+import java.util.Scanner;
+import java.util.InputMismatchException;
+import java.util.Random;
+import java.util.ArrayList;
+
 /**
  * Blackjack.java: A simple blackjack game.
  * <p>
@@ -38,14 +43,182 @@
  * @version 1.0
  */
 
-public BlackJack {
+public class Blackjack {
   //Constants
 
   //Instance variables
+  public int betAmount = 0;
+  public static Player player = new Player();
+  public static ArrayList <Card> deck = new ArrayList <Card>(52);
+
+  public static ArrayList <Integer> shuffle = new ArrayList<Integer>();
+  public static Random rand = new Random();
 
   public static void main(String[] args) {
+    //Creates a 52 card deck
+    createDeck();
+    //shuffles the deck
+    shuffleDeck();
+    //Asks for players Name
+    askPlayerName();
 
+    //Loops untill user enter a proper money amount
+    while (true) {
+      //Trys to get proper input from user
+      try {
+        //Asks for players money amount
+        askPlayerMoney();
+        //Ends Loop
+        break;
+      }
+      catch (InputMismatchException e) {
+        System.out.println("The money amount you entered must be a whole integer number. Try again.");
+      }
+      catch (PlayerInputException e) {
+        System.out.println(e.getMessage());
+      }
+    }
 
+    //Loops untill user enter a proper bet amount
+    while (true) {
+      //Trys to get proper input from user
+      try {
+        //Asks for players bet amount
+        askBetAmount();
+        //Ends Loop
+        break;
+      }
+      catch (InputMismatchException e) {
+        System.out.println("The money amount you entered must be a whole integer number. Try again.");
+      }
+      catch (PlayerInputException e) {
+        System.out.println(e.getMessage());
+      }
+    }
+}
 
+  //Helper methods
+
+  public static void askPlayerName(){
+    //Creates a scanner to get user input
+    Scanner userInput = new Scanner(System.in);
+
+    //Asks player for thier name.
+    System.out.print("Enter your name: ");
+    String name = userInput.next();
+
+    //Sets players name.
+    player.setName(name);
+  }
+
+  public static void askPlayerMoney() throws PlayerInputException {
+    //Creates a scanner to get user input
+    Scanner userInput2 = new Scanner(System.in);
+
+    //Asks user for thier inital amount of money
+    System.out.print("Enter your amount of money: ");
+    int money = userInput2.nextInt();
+
+    //Checks for valid user input
+    if (money <= 0) {
+      throw new PlayerInputException();
+    }
+    //Sets players money amount
+    player.setMoney(money);
+  }
+
+  public static void askBetAmount() throws PlayerInputException {
+    //Creates a scanner to get user input
+    Scanner userInput3 = new Scanner(System.in);
+
+    //Asks player for thier name.
+    System.out.print("Enter your bet amount: ");
+    int betAmount = userInput3.nextInt();
+
+    //Checks for valid user input
+    if (betAmount <= 0) {
+      throw new PlayerInputException();
+    }
+  }
+
+  public static void createDeck() {
+    String suit = "";
+    for (int i = 0; i < 4; i++) {
+      switch (i){
+        case 0: suit = "H";
+        deck.add (new Card(1, suit, "One"));
+        deck.add (new Card(2, suit, "Two"));
+        deck.add (new Card(3, suit, "Three"));
+        deck.add (new Card(4, suit, "Four"));
+        deck.add (new Card(5, suit, "Five"));
+        deck.add (new Card(6, suit, "Six"));
+        deck.add (new Card(7, suit, "Seven"));
+        deck.add (new Card(8, suit, "Eight"));
+        deck.add (new Card(9, suit, "Nine"));
+        deck.add (new Card(10, suit, "Ten"));
+        deck.add (new Card(10, suit, "Jack"));
+        deck.add (new Card(10, suit, "King"));
+        deck.add (new Card(10, suit, "Queen"));
+        break;
+        case 1: suit = "D";
+        deck.add (new Card(1, suit, "One"));
+        deck.add (new Card(2, suit, "Two"));
+        deck.add (new Card(3, suit, "Three"));
+        deck.add (new Card(4, suit, "Four"));
+        deck.add (new Card(5, suit, "Five"));
+        deck.add (new Card(6, suit, "Six"));
+        deck.add (new Card(7, suit, "Seven"));
+        deck.add (new Card(8, suit, "Eight"));
+        deck.add (new Card(9, suit, "Nine"));
+        deck.add (new Card(10, suit, "Ten"));
+        deck.add (new Card(10, suit, "Jack"));
+        deck.add (new Card(10, suit, "King"));
+        deck.add (new Card(10, suit, "Queen"));
+        break;
+        case 2: suit = "C";
+        deck.add (new Card(1, suit, "One"));
+        deck.add (new Card(2, suit, "Two"));
+        deck.add (new Card(3, suit, "Three"));
+        deck.add (new Card(4, suit, "Four"));
+        deck.add (new Card(5, suit, "Five"));
+        deck.add (new Card(6, suit, "Six"));
+        deck.add (new Card(7, suit, "Seven"));
+        deck.add (new Card(8, suit, "Eight"));
+        deck.add (new Card(9, suit, "Nine"));
+        deck.add (new Card(10, suit, "Ten"));
+        deck.add (new Card(10, suit, "Jack"));
+        deck.add (new Card(10, suit, "King"));
+        deck.add (new Card(10, suit, "Queen"));
+        break;
+        case 3: suit = "S";
+        deck.add (new Card(1, suit, "One"));
+        deck.add (new Card(2, suit, "Two"));
+        deck.add (new Card(3, suit, "Three"));
+        deck.add (new Card(4, suit, "Four"));
+        deck.add (new Card(5, suit, "Five"));
+        deck.add (new Card(6, suit, "Six"));
+        deck.add (new Card(7, suit, "Seven"));
+        deck.add (new Card(8, suit, "Eight"));
+        deck.add (new Card(9, suit, "Nine"));
+        deck.add (new Card(10, suit, "Ten"));
+        deck.add (new Card(10, suit, "Jack"));
+        deck.add (new Card(10, suit, "King"));
+        deck.add (new Card(10, suit, "Queen"));
+        break;
+        default:
+        break;
+      }
+    }
+  }
+
+  public static void shuffleDeck() {
+    while(shuffle.size() < 51) {
+      int deckSpot = rand.nextInt(52);
+      if (!shuffle.contains(deckSpot)) {
+        shuffle.add(deckSpot);
+        deck.add(deck.get(deckSpot));
+        deck.remove(deckSpot);
+      }
+    }
   }
 }

@@ -9,17 +9,19 @@
 
 public class Card {
   //Instance variables
-  int value = 0;              //The cards face value.
-  String suit = "";           //The cards suit.
+  private int value = 0;              //The cards face value.
+  private String suit = "";           //The cards suit.
+  private String name = "";           //The Cards Name Jack, Ten, Queen
 
   /**
    * Two Arg-Constructor holding a Cards value and suit.
    * @param value 1 - 11
-   * @param suit Clubs, Diamond, Hearts, Spades
+   * @param suit Clubs, Diamonds, Hearts, Spades
    */
-  public Card(int value, String suit) {
+  public Card(int value, String suit, String name) {
     this.value = value;
     this.suit = suit;
+    this.name = name;
   }
 
   /**
@@ -41,10 +43,18 @@ public class Card {
 
   /**
    * Gets a Cards suit.
-   * @return Clubs, Diamond, Hearts, Spades
+   * @return Clubs, Diamonds, Hearts, Spades
    */
   public String getSuit() {
     return this.suit;
+  }
+
+  /**
+   * Gets a Cards name.
+   * @return One, Seven, Jack, Queen
+   */
+  public String getName() {
+    return this.name;
   }
 
   /**
@@ -57,9 +67,17 @@ public class Card {
 
   /**
    * Sets a Cards Suit.
-   * @param suit Clubs, Diamond, Hearts, Spades
+   * @param suit Clubs, Diamonds, Hearts, Spades
    */
   public void setSuit(String suit) {
+    this.suit = suit;
+  }
+
+  /**
+   * Sets a Cards name.
+   * @param name One, Seven, Jack, Queen
+   */
+  public void setName(String suit) {
     this.suit = suit;
   }
 
@@ -70,7 +88,7 @@ public class Card {
    * @return Value and Suit
    */
   public String toString() {
-    return ( "Vale: " + value + ", Suit: " + suit);
+    return ( "Value: " + value + ", Suit: " + suit + ", Name: " + name);
   }
 
   /**
@@ -88,6 +106,4 @@ public class Card {
     Card anotherCard = (Card) anObject;
     return (suit.equals(anotherCard.getSuit()) && value == anotherCard.getValue());
   }
-
-
 }
