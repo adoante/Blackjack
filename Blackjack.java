@@ -45,6 +45,8 @@ import java.util.ArrayList;
 
 public class Blackjack {
   //Constants
+  public static final int MIN_BET = 5;
+  public static final int MAX_BET = 200;
 
   //Instance variables
   public int betAmount = 0;
@@ -83,7 +85,7 @@ public class Blackjack {
       catch (InputMismatchException e) {
         System.out.println("The money amount you entered must be a whole integer number. Try again.");
       }
-      catch (PlayerInputException e) {
+      catch (MoneyInputException e) {
         System.out.println(e.getMessage());
       }
     }
@@ -100,7 +102,7 @@ public class Blackjack {
       catch (InputMismatchException e) {
         System.out.println("The money amount you entered must be a whole integer number. Try again.");
       }
-      catch (PlayerInputException e) {
+      catch (MoneyInputException e) {
         System.out.println(e.getMessage());
       }
     }
@@ -126,7 +128,7 @@ public class Blackjack {
     }
   }
 
-  public static void askPlayerMoney() throws PlayerInputException {
+  public static void askPlayerMoney() throws MoneyInputException {
     //Creates a scanner to get user input
     Scanner userInput2 = new Scanner(System.in);
 
@@ -136,23 +138,26 @@ public class Blackjack {
 
     //Checks for valid user input
     if (money <= 0) {
-      throw new PlayerInputException();
+      throw new MoneyInputException();
     }
     //Sets players money amount
     player.setMoney(money);
   }
 
-  public static void askBetAmount() throws PlayerInputException {
+  public static void askBetAmount() throws MoneyInputException {
     //Creates a scanner to get user input
     Scanner userInput3 = new Scanner(System.in);
 
     //Asks player for thier name.
-    System.out.print("Enter your bet amount: ");
+    System.out.print("Enter your bet amount in increments of $5: ");
     int betAmount = userInput3.nextInt();
 
     //Checks for valid user input
     if (betAmount <= 0) {
-      throw new PlayerInputException();
+      throw new MoneyInputException();
+    }
+    else if (betAmount < MIN_BET || betAmount > MAX_BET) {
+      throw new MoneyInputException(betAmount);
     }
   }
 
