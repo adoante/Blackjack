@@ -59,8 +59,17 @@ public class Blackjack {
     createDeck();
     //shuffles the deck
     shuffleDeck();
-    //Asks for players Name
-    askPlayerName();
+
+    while (true) {
+      try {
+        //Asks for players Name
+        askPlayerName();
+        //Ends Loop
+        break;
+      } catch (CharacterLimitException e) {
+        System.out.println(e.getMessage());
+      }
+    }
 
     //Loops untill user enter a proper money amount
     while (true) {
@@ -99,7 +108,7 @@ public class Blackjack {
 
   //Helper methods
 
-  public static void askPlayerName(){
+  public static void askPlayerName() throws CharacterLimitException{
     //Creates a scanner to get user input
     Scanner userInput = new Scanner(System.in);
 
@@ -107,8 +116,14 @@ public class Blackjack {
     System.out.print("Enter your name: ");
     String name = userInput.next();
 
-    //Sets players name.
-    player.setName(name);
+    //Checks name length
+    if (name.length() > 15) {
+      throw new CharacterLimitException();
+    }
+    else {
+      //Sets players name.
+      player.setName(name);
+    }
   }
 
   public static void askPlayerMoney() throws PlayerInputException {
