@@ -51,10 +51,13 @@ public class Blackjack {
   //Instance variables
   public int betAmount = 0;
   public static Player player = new Player();
-  public static ArrayList <Card> deck = new ArrayList <Card>(52);
-
-  public static ArrayList <Integer> shuffle = new ArrayList<Integer>();
   public static Random rand = new Random();
+
+  public static ArrayList <Card> deck = new ArrayList <Card>(52);
+  public static ArrayList <Integer> shuffle = new ArrayList <Integer>();
+
+  public static ArrayList <Card> playerHand = new ArrayList <Card>();
+  public static ArrayList <Card> dealerHand = new ArrayList <Card>();
 
   public static void main(String[] args) {
     //Creates a 52 card deck
@@ -62,6 +65,7 @@ public class Blackjack {
     //shuffles the deck
     shuffleDeck();
 
+    //Loops untill user enters a proper name
     while (true) {
       try {
         //Asks for players Name
@@ -105,6 +109,19 @@ public class Blackjack {
       catch (MoneyInputException e) {
         System.out.println(e.getMessage());
       }
+    }
+
+    //Loops untill player turn ends
+    while (true) {
+      try {
+        //Asks player for either hit or bust
+        if (playerMove()) {
+          break;
+        }
+      } catch (IllegalMoveException e) {
+        System.out.println(e.getMessage());
+      }
+
     }
 }
 
@@ -239,6 +256,28 @@ public class Blackjack {
         deck.add(deck.get(deckSpot));
         deck.remove(deckSpot);
       }
+    }
+  }
+
+  public static boolean playerMove() throws IllegalMoveException {
+    //Creates a scanner to get user input
+    Scanner userInput5 = new Scanner(System.in);
+
+    //Asks player for thier name.
+    System.out.print("Enter Hit or Stay: ");
+    String move = userInput5.next();
+
+    move = move.toUpperCase();
+    if (move.equals("STAY")) {
+      return (true);
+    }
+    else if (move.equals("HIT")) {
+      playerHand.add(deck.get(0));
+      deck.remove(0);
+      return (false);
+    }
+    else {
+      throw new IllegalMoveException(move);
     }
   }
 }
