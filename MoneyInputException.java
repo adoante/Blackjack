@@ -11,21 +11,18 @@
 */
 
 public class MoneyInputException extends Exception {
-
- /**
-  * Tells user that their money amount isn't valid
-  * @param name thier wanted money amount
-  */
- public MoneyInputException() {
-   super("The money amount you entered must not be negitive or zero. Try again.");
- }
-
 /**
  * Tells user that their money amount is over the max or under the min
  * @param bet [description]
  */
  public MoneyInputException(int bet) {
-   super("Your bet of " + bet + " isn't a valid bet.");
+   super("Your bet of " + bet + " must be in increments of $5 & meet the Min/Max bet.");
+ }
+ /**
+  * Tells user that thier money amount cannot be negitive or zero.
+  */
+ public MoneyInputException() {
+   super("The money amount you entered must be a non-negitive whole number greater than zero.");
  }
 
 }
