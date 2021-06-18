@@ -166,14 +166,15 @@ public class Blackjack {
     Scanner userInput3 = new Scanner(System.in);
 
     //Asks player for thier name.
+    System.out.println("Min: $" + MIN_BET + ", Max: $" + MAX_BET);
     System.out.print("Enter your bet amount in increments of $5: ");
     int betAmount = userInput3.nextInt();
 
     //Checks for valid user input
-    if (betAmount <= 0) {
-      throw new MoneyInputException();
+    if ((betAmount % 5) != 0) {
+      throw new MoneyInputException(betAmount);
     }
-    else if (betAmount < MIN_BET || betAmount > MAX_BET) {
+    if (betAmount < MIN_BET || betAmount > MAX_BET) {
       throw new MoneyInputException(betAmount);
     }
   }
