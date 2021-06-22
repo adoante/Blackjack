@@ -50,14 +50,15 @@ public class Blackjack {
 
   //Instance variables
   public int betAmount = 0;
+  public static int cardNum = 0;
   public static Player player = new Player();
   public static Random rand = new Random();
 
   public static ArrayList <Card> deck = new ArrayList <Card>(52);
   public static ArrayList <Integer> shuffle = new ArrayList <Integer>();
 
-  public static ArrayList <Card> playerHand = new ArrayList <Card>();
-  public static ArrayList <Card> dealerHand = new ArrayList <Card>();
+  public static ArrayList <Card> playerHand = new ArrayList <Card>(11);
+  public static ArrayList <Card> dealerHand = new ArrayList <Card>(11);
 
   public static void main(String[] args) {
     //Creates a 52 card deck
@@ -111,6 +112,10 @@ public class Blackjack {
       }
     }
 
+    dealCards();
+
+    printTable();
+
     //Loops untill player turn ends
     while (true) {
       try {
@@ -118,6 +123,8 @@ public class Blackjack {
         if (playerMove()) {
           break;
         }
+
+        printTable();
       } catch (IllegalMoveException e) {
         System.out.println(e.getMessage());
       }
@@ -280,5 +287,26 @@ public class Blackjack {
     else {
       throw new IllegalMoveException(move);
     }
+  }
+
+  public static void printTable() {
+    System.out.println();
+
+    System.out.println("Dealer's Hand ------ Player's Hand");
+    System.out.println("|  " + dealerHand.get(cardNum).getName() + ", " + dealerHand.get(cardNum).getSuit() +
+                       "  |      |  " + playerHand.get(cardNum).getName() + ", " + playerHand.get(cardNum).getSuit() + "  |");
+    System.out.println("----------------------------------");
+    cardNum++;
+  }
+
+  public static void dealCards() {
+    playerHand.add(deck.get(0));
+    deck.remove(0);
+    dealerHand.add(deck.get(0));
+    deck.remove(0);
+    playerHand.add(deck.get(0));
+    deck.remove(0);
+    dealerHand.add(deck.get(0));
+    deck.remove(0);
   }
 }
